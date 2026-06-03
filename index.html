@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manu Uncle Travels - Premium Luxury Travel Transit & Car Rentals in Kerala. Easy Online Bookings, Premium Vehicles, Scenic Packages.">
+    <title>Manu Uncle Travels - Premium Luxury Transit</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <!-- FontAwesome Vector Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Premium Styling -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen relative font-sans text-white pb-12">
+
+    <!-- Anti-gravity floating background light glows -->
+    <div class="floating-orb top-10 left-5"></div>
+    <div class="floating-orb top-[60vh] right-5" style="animation-delay: -7s;"></div>
+    <div class="floating-orb bottom-10 left-1/4" style="animation-delay: -14s;"></div>
+    <div class="floating-orb-2 top-[30vh] right-1/4" style="animation-delay: -3s;"></div>
+
+    <!-- ==========================================
+         HEADER & NAVIGATION BAR
+         ========================================== -->
+    <header class="sticky top-0 z-50 px-4 md:px-8 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl px-6 py-3 shadow-2xl">
+            <!-- Brand Logo -->
+            <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center space-x-4 transition-transform hover:scale-[1.01]">
+                <img src="assets/logo.png" alt="Manu Uncle Travels Logo" class="h-12 w-12 md:h-16 md:w-16 rounded-full border-2 border-amber-500/30 object-cover shadow-[0_0_15px_rgba(245,158,11,0.35)] transition-transform duration-300 hover:rotate-12">
+                <span class="text-lg md:text-2xl brand-title uppercase">
+                    Manu Uncle Travels
+                </span>
+            </a>
+            
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex space-x-7 font-medium text-xs md:text-sm tracking-wide">
+                <a href="#" data-view="home" class="nav-link nav-link-active transition-colors hover:text-amber-400">Home</a>
+                <a href="#" data-view="packages" class="nav-link transition-colors hover:text-amber-400">Trip Packages</a>
+                <a href="#" data-view="vehicles" class="nav-link transition-colors hover:text-amber-400">Our Vehicles</a>
+                <a href="#" data-view="rent-cars" class="nav-link transition-colors hover:text-amber-400">Rent A Car</a>
+                <a href="#" data-view="about" class="nav-link transition-colors hover:text-amber-400">About Us</a>
+                <a href="#" data-view="contact" class="nav-link transition-colors hover:text-amber-400">Contact</a>
+            </nav>
+
+            <!-- Sleek Glassmorphic Search Bar -->
+            <div class="hidden lg:flex items-center relative w-44 xl:w-56">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 text-[10px] text-gray-500"></i>
+                <input type="text" placeholder="Search trips or cars..." oninput="handleSiteSearch(this.value)" class="w-full site-search-input glass-input rounded-xl pl-8 pr-3 py-1.5 text-xs" style="background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.08);">
+            </div>
+
+            <!-- Desktop Auth Controls -->
+            <div class="hidden lg:flex items-center space-x-4">
+                <!-- Google Login Trigger -->
+                <button id="btn-nav-auth" onclick="openAuthModal()" class="google-btn px-4.5 py-2.5 rounded-xl text-xs font-bold tracking-wider flex items-center space-x-2 cursor-pointer shadow">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Icon" class="h-4 w-4">
+                    <span>Sign in with Google</span>
+                </button>
+
+                <!-- Profile Dropdown (Initially Hidden) -->
+                <div id="profile-dropdown" class="relative hidden">
+                    <button onclick="toggleProfileMenu()" class="flex items-center space-x-2 bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-xs font-bold hover:bg-white/10 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-circle-user text-amber-400 text-base"></i>
+                        <span id="profile-name">User Account</span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <!-- Dropdown Options -->
+                    <div id="profile-dropdown-menu" class="absolute right-0 mt-2 w-48 bg-zinc-950 border border-white/10 rounded-xl py-2 shadow-2xl hidden z-50">
+                        <a href="#" onclick="logout(); toggleProfileMenu(); return false;" class="flex items-center px-4 py-2.5 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/5"><i class="fa-solid fa-right-from-bracket mr-2"></i> Log Out</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Burger Button -->
+            <div class="lg:hidden flex items-center">
+                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-white hover:text-amber-400 transition-colors focus:outline-none p-1 cursor-pointer">
+                    <i class="fa-solid fa-bars-staggered text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu" class="hidden lg:hidden mt-3 max-w-7xl mx-auto bg-zinc-950/95 border border-white/10 rounded-2xl p-5 shadow-2xl flex flex-col space-y-4">
+            <!-- Sleek Mobile Search Bar -->
+            <div class="relative w-full">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 transform -translate-y-1/2 text-xs text-gray-500"></i>
+                <input type="text" placeholder="Search trips or cars..." oninput="handleSiteSearch(this.value)" class="w-full site-search-input glass-input rounded-xl pl-9 pr-4 py-2.5 text-xs">
+            </div>
+            <a href="#" data-view="home" class="nav-link font-medium text-sm text-gray-300 hover:text-amber-400">Home</a>
+            <a href="#" data-view="packages" class="nav-link font-medium text-sm text-gray-300 hover:text-amber-400">Packages</a>
+            <a href="#" data-view="vehicles" class="nav-link font-medium text-sm text-gray-300 hover:text-amber-400">Our Vehicles</a>
+            <a href="#" data-view="rent-cars" class="nav-link font-medium text-sm text-gray-300 hover:text-amber-400">Rent A Car</a>
+            <a href="#" data-view="about" class="nav-link font-medium text-sm text-gray-300 hover:text-amber-400">About Us</a>
+            <a href="#" data-view="contact" class="nav-link font-medium text-sm text-gray-300 hover:text-amber-400">Contact</a>
+            <hr class="border-white/5">
+            <button onclick="openAuthModal()" class="w-full google-btn py-3 rounded-xl text-xs font-bold tracking-wider flex items-center justify-center space-x-2 transition-all cursor-pointer">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Icon" class="h-4 w-4">
+                <span>Sign in with Google</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         MAIN VIEWS
+         ========================================== -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-8">
+
+        <!-- 1. HOME VIEW -->
+        <section id="section-home" class="view-section active flex flex-col items-center">
+            <!-- Hero Typography -->
+            <div class="text-center mt-8 mb-12">
+                <h1 class="text-4xl md:text-7xl font-black mb-6 tracking-tight leading-none uppercase">
+                    Your <span class="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-md">Premium</span> Journey Starts Here
+                </h1>
+                <p class="text-gray-400 text-base md:text-xl max-w-2xl mx-auto font-light">
+                    Experience luxury tours, airport transit, and custom vacation transit across Kerala. Driven by professional chauffeurs directly to your destination.
+                </p>
+            </div>
+
+            <!-- Booking Widget Card -->
+            <div id="booking-card" class="w-full max-w-4xl glass-panel rounded-3xl p-6 md:p-10 shadow-2xl transition-transform duration-200 ease-out transform-gpu">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-white/10 pb-4">
+                    <h3 class="text-lg md:text-xl font-bold flex items-center text-amber-400 tracking-wide uppercase">
+                        <span class="inline-block w-2.5 h-5 bg-amber-500 rounded mr-2.5 shadow-[0_0_10px_rgba(245,158,11,0.5)]"></span>
+                        Reserve Transit Ride
+                    </h3>
+                    <p class="text-[11px] text-gray-400 mt-1 md:mt-0 font-medium"><i class="fa-solid fa-circle-info text-amber-500 mr-1"></i>All submissions directly open WhatsApp for instant booking</p>
+                </div>
+                
+                <form id="booking-form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" onsubmit="return false;">
+                    <!-- From Location -->
+                    <div class="flex flex-col">
+                        <label for="book-from" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2"><i class="fa-solid fa-circle-dot text-[9px] text-amber-500 mr-1"></i>From Location *</label>
+                        <select id="book-from" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
+                            <option value="Cochin" selected>Cochin Hub (Airport/Station)</option>
+                            <option value="Munnar">Munnar Valley</option>
+                            <option value="Wayanad">Wayanad Hills</option>
+                            <option value="Vagamon">Vagamon Meadows</option>
+                            <option value="Alleppey">Alleppey Backwaters</option>
+                            <option value="Trivandrum">Trivandrum City</option>
+                        </select>
+                    </div>
+
+                    <!-- To Location -->
+                    <div class="flex flex-col">
+                        <label for="book-to" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2"><i class="fa-solid fa-location-dot text-[9px] text-amber-500 mr-1"></i>To Destination *</label>
+                        <select id="book-to" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
+                            <option value="" disabled selected>Choose Destination</option>
+                            <option value="Munnar">Munnar Valley</option>
+                            <option value="Wayanad">Wayanad Hills</option>
+                            <option value="Vagamon">Vagamon Meadows</option>
+                            <option value="Alleppey">Alleppey Backwaters</option>
+                            <option value="Trivandrum">Trivandrum City</option>
+                            <option value="Cochin">Cochin Airport</option>
+                        </select>
+                    </div>
+
+                    <!-- Journey Date -->
+                    <div class="flex flex-col">
+                        <label for="book-date" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2"><i class="fa-regular fa-calendar-days text-[9px] text-amber-500 mr-1"></i>Journey Date *</label>
+                        <input type="date" id="book-date" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer" required>
+                    </div>
+
+                    <!-- Return Date (Optional) -->
+                    <div class="flex flex-col">
+                        <label for="book-return-date" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2"><i class="fa-regular fa-calendar text-[9px] text-gray-500 mr-1"></i>Return Date <span class="text-gray-500 font-normal">(Optional)</span></label>
+                        <input type="date" id="book-return-date" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
+                    </div>
+
+                    <!-- Vehicle Fleet Category -->
+                    <div class="flex flex-col md:col-span-2">
+                        <label for="book-vehicle" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2"><i class="fa-solid fa-car-side text-[9px] text-amber-500 mr-1"></i>Select Vehicle *</label>
+                        <select id="book-vehicle" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
+                            <!-- Injected dynamically via JS -->
+                        </select>
+                    </div>
+
+                    <!-- Number of Passengers -->
+                    <div class="flex flex-col md:col-span-2">
+                        <label for="book-passengers" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2"><i class="fa-solid fa-users text-[9px] text-amber-500 mr-1"></i>Passengers</label>
+                        <select id="book-passengers" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
+                            <option value="1">1 Passenger</option>
+                            <option value="2" selected>2 Passengers</option>
+                            <option value="3">3 Passengers</option>
+                            <option value="4">4 Passengers</option>
+                            <option value="6">6 Passengers</option>
+                            <option value="12">12 Passengers (Traveller Only)</option>
+                        </select>
+                    </div>
+                </form>
+
+
+
+                <!-- Terms agreement checkbox -->
+                <div class="mt-6 flex items-start space-x-2 text-xs text-gray-400 text-left w-full">
+                    <input type="checkbox" id="transit-agree-terms" class="mt-0.5 rounded border-white/10 bg-white/5 text-amber-500 focus:ring-amber-500 cursor-pointer">
+                    <label for="transit-agree-terms" class="cursor-pointer leading-normal">
+                        I agree to the <a href="#" onclick="openTermsModal(); return false;" class="text-amber-400 hover:underline font-bold">Terms & Conditions</a> (Valid Driving License & Aadhaar Card submission required, and full responsibility for any vehicle damage).
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-4 flex justify-end">
+                    <button type="button" onclick="handleTransitBooking()" class="btn-gold w-full md:w-auto px-8 py-3.5 rounded-xl text-xs md:text-sm tracking-wider uppercase cursor-pointer">
+                        <i class="fa-brands fa-whatsapp text-base mr-2"></i>Book via WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <!-- ================= YATHRAKAL (TRAVEL STORIES) SECTION ================= -->
+            <div class="w-full mt-24 text-left">
+                <div class="flex justify-between items-end mb-8 border-b border-white/5 pb-4">
+                    <div>
+                        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight text-white uppercase">
+                            Yathrakal <span class="bg-gradient-to-r from-amber-300 to-yellow-500 bg-clip-text text-transparent">(Travel Stories)</span>
+                        </h2>
+                        <p class="text-gray-400 text-sm mt-1">Explore authentic travel memories and diaries published directly by our tour guides.</p>
+                    </div>
+                    <!-- Submit story button removed for customers. Stories are managed entirely from Admin Panel -->
+                </div>
+
+                <div id="stories-list-inject" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                    <!-- Yathrakal Stories dynamically injected by JS -->
+                </div>
+            </div>
+
+            <!-- ================= CUSTOMER RATING REVIEWS SECTION ================= -->
+            <div class="w-full mt-24 text-left">
+                <div class="flex justify-between items-end mb-8 border-b border-white/5 pb-4">
+                    <div>
+                        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight text-white uppercase">
+                            Customer Reviews
+                        </h2>
+                        <p class="text-gray-400 text-sm mt-1">Our customers precious feedback and ratings.</p>
+                    </div>
+                    <button onclick="openReviewModal()" class="bg-white/5 border border-white/10 hover:bg-amber-500 hover:text-black hover:border-transparent px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer">
+                        Submit Feedback
+                    </button>
+                </div>
+
+                <div id="reviews-grid-inject" class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                    <!-- Reviews injected here -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 2. PACKAGES VIEW -->
+        <section id="section-packages" class="view-section">
+            <h2 class="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tight text-center md:text-left">
+                Kerala Holiday Packages
+            </h2>
+            <p class="text-gray-400 text-sm md:text-base max-w-xl mb-12 text-center md:text-left">
+                Explore curated, all-inclusive luxury holiday experiences across Kerala, driven by our transport desk.
+            </p>
+
+            <div id="packages-grid-inject" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Dynamically rendered packages catalog -->
+            </div>
+        </section>
+
+        <!-- 3. OUR VEHICLES VIEW -->
+        <section id="section-vehicles" class="view-section">
+            <h2 class="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tight text-center md:text-left">
+                Our Premium Vehicles
+            </h2>
+            <p class="text-gray-400 text-sm md:text-base max-w-xl mb-12 text-center md:text-left">
+                Select from our top-tier luxury vehicle collection equipped with high-class travel comforts and verified chauffeurs.
+            </p>
+
+            <div id="vehicles-grid-inject" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Dynamically rendered vehicles catalog -->
+            </div>
+        </section>
+
+        <!-- 4. RENT A CAR VIEW -->
+        <section id="section-rent-cars" class="view-section">
+            <!-- Header elements -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 text-left border-b border-white/5 pb-4">
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white">
+                        RENT A <span class="bg-gradient-to-r from-amber-300 to-yellow-500 bg-clip-text text-transparent">CAR</span>
+                    </h2>
+                    <p class="text-gray-400 text-sm mt-1">Select from our ultimate luxury collection for self-drive or chauffeur driven trips.</p>
+                </div>
+            </div>
+
+            <!-- Vehicles Fleet Cards Grid -->
+            <div id="rent-cars-grid-inject" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <!-- Dynamically rendered self-drive vehicles list -->
+            </div>
+
+            <!-- Booking Rental Calculation Form -->
+            <div id="rent-car-form" class="w-full max-w-4xl mx-auto glass-panel rounded-3xl p-6 md:p-10 shadow-2xl mt-12 text-left">
+                <h3 class="text-lg md:text-xl font-bold mb-8 flex items-center text-amber-400 tracking-wide uppercase">
+                    <span class="inline-block w-2.5 h-5 bg-amber-500 rounded mr-2.5 shadow-[0_0_10px_rgba(245,158,11,0.5)]"></span>
+                    Configure Rental Booking
+                </h3>
+
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-6" onsubmit="return false;">
+                    <div class="flex flex-col">
+                        <label for="rent-vehicle-select" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Select Car Model *</label>
+                        <select id="rent-vehicle-select" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
+                            <!-- JS dynamic options -->
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="rent-days-input" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Number of Days Required *</label>
+                        <input type="number" id="rent-days-input" min="1" placeholder="e.g. 5" class="glass-input rounded-xl px-4 py-3 text-sm">
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="rent-date-start" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Pick-up Start Date *</label>
+                        <input type="date" id="rent-date-start" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="rent-pickup-location" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Pick-up Location *</label>
+                        <input type="text" id="rent-pickup-location" placeholder="e.g. Cochin Airport Hub" class="glass-input rounded-xl px-4 py-3 text-sm">
+                    </div>
+
+                    <div class="flex flex-col md:col-span-2">
+                        <label for="rent-driver-choice" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Driving Choice</label>
+                        <select id="rent-driver-choice" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
+                            <option value="self" selected>Self-Drive (I will drive myself)</option>
+                            <option value="chauffeur">Chauffeur Guided (Include Professional Driver)</option>
+                        </select>
+                    </div>
+                </form>
+
+
+
+                <!-- Terms agreement checkbox -->
+                <div class="mt-6 flex items-start space-x-2 text-xs text-gray-400 text-left w-full">
+                    <input type="checkbox" id="rent-agree-terms" class="mt-0.5 rounded border-white/10 bg-white/5 text-amber-500 focus:ring-amber-500 cursor-pointer">
+                    <label for="rent-agree-terms" class="cursor-pointer leading-normal">
+                        I agree to the <a href="#" onclick="openTermsModal(); return false;" class="text-amber-400 hover:underline font-bold">Terms & Conditions</a> (Valid Driving License & Aadhaar Card submission required, and full responsibility for any vehicle damage).
+                    </label>
+                </div>
+
+                <div class="mt-4 flex justify-end">
+                    <button type="button" onclick="handleRentalBooking()" class="btn-gold w-full md:w-auto px-8 py-3.5 rounded-xl text-xs md:text-sm tracking-wider uppercase cursor-pointer">
+                        <i class="fa-brands fa-whatsapp text-base mr-2"></i>Send Rent Request
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ABOUT US VIEW -->
+        <section id="section-about" class="view-section">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-left">
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-black mb-6 uppercase tracking-tight">
+                        About Manu Uncle Travels
+                    </h2>
+                    <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-4">
+                        At <strong>Manu Uncle Travels</strong>, we specialize in delivering seamless travel experiences across Kerala and India, combining comfort, reliability, and professionalism. From airport transfers and sightseeing tours to honeymoon trips and intercity travels, we provide complete travel solutions tailored to your needs.
+                    </p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Our well-maintained vehicles and experienced drivers ensure every journey is safe, punctual, and stress-free.
+                    </p>
+                    <div class="text-amber-400 font-display italic text-lg font-semibold tracking-wide mb-6 border-l-2 border-amber-500 pl-4 py-1">
+                        "Travel with confidence, travel with Manu Uncle Travels"
+                    </div>
+                    <div class="grid grid-cols-3 gap-6 pt-6 border-t border-white/10 text-center">
+                        <div>
+                            <h5 class="text-2xl md:text-3xl font-black text-amber-400">14k+</h5>
+                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider mt-1">Happy Guests</p>
+                        </div>
+                        <div>
+                            <h5 class="text-2xl md:text-3xl font-black text-amber-400">25+</h5>
+                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider mt-1">Premium Cars</p>
+                        </div>
+                        <div>
+                            <h5 class="text-2xl md:text-3xl font-black text-amber-400">14</h5>
+                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider mt-1">Kerala Awards</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-3xl relative overflow-hidden flex flex-col items-center justify-center text-center border-amber-500/20">
+                    <div class="w-24 h-24 bg-gradient-to-tr from-amber-400 to-yellow-600 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+                        <img src="assets/logo.png" alt="Manu Uncle Brand Emblem" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <h4 class="text-2xl font-black mb-1">"Manu Uncle"</h4>
+                    <p class="text-xs text-amber-400 uppercase tracking-widest font-semibold mb-4">Founder & Operations Lead</p>
+                    <p class="text-gray-400 text-xs italic leading-relaxed max-w-sm">
+                        "For me, travel isn't just about reaching the destination. It is about the comfort, the conversations on the road, and the peace of mind knowing you are in safe, professional hands. We guarantee that safety and luxury in every trip you book."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CONTACT VIEW -->
+        <section id="section-contact" class="view-section">
+            <h2 class="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tight text-center">
+                Connect With Us
+            </h2>
+            <p class="text-gray-400 text-sm md:text-base max-w-xl mx-auto mb-12 text-center">
+                Have questions about custom routes or large group logistics? Send us a message and our tour coordinators will reply within an hour.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Quick Contact Info -->
+                <div class="glass-panel p-8 rounded-2xl flex flex-col space-y-8 text-left">
+                    <div class="flex items-start">
+                        <div class="bg-amber-500/10 border border-amber-500/20 p-3.5 rounded-xl mr-4 text-amber-400">
+                            <i class="fa-solid fa-headset text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm uppercase tracking-wider text-white">Call Booking Desk</h4>
+                            <p class="text-xs text-gray-400 mt-1">Direct support and phone reservations</p>
+                            <p class="text-sm font-bold text-amber-400 mt-2 font-mono">+91 85471 32282</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <div class="bg-amber-500/10 border border-amber-500/20 p-3.5 rounded-xl mr-4 text-amber-400">
+                            <i class="fa-solid fa-envelope text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm uppercase tracking-wider text-white">Gmail Address</h4>
+                            <p class="text-xs text-gray-400 mt-1">Queries, invoices and partner packages</p>
+                            <p class="text-sm font-bold text-amber-400 mt-2 font-mono">manuuncletravels@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <div class="bg-amber-500/10 border border-amber-500/20 p-3.5 rounded-xl mr-4 text-amber-400">
+                            <i class="fa-solid fa-location-dot text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm uppercase tracking-wider text-white">Location</h4>
+                            <p class="text-xs text-gray-400 mt-1">Operational Head Office Hub</p>
+                            <p class="text-sm font-bold text-amber-400 mt-2">Manu Uncle Travels</p>
+                            <p class="text-xs text-gray-300 mt-0.5 font-medium">Chengannur, Angadical - 689123</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Glass Contact Form -->
+                <div class="lg:col-span-2 glass-panel p-8 rounded-2xl">
+                    <form onsubmit="alert('Message sent successfully! Our team will contact you soon.'); this.reset(); return false;" class="grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
+                        <div class="flex flex-col">
+                            <label class="text-[10px] font-bold uppercase text-gray-400 tracking-wider mb-2">Your Name</label>
+                            <input type="text" placeholder="e.g. Adarsh" class="glass-input rounded-xl px-4 py-3 text-sm" required>
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-[10px] font-bold uppercase text-gray-400 tracking-wider mb-2">Email Address</label>
+                            <input type="email" placeholder="e.g. adarsh@gmail.com" class="glass-input rounded-xl px-4 py-3 text-sm" required>
+                        </div>
+                        <div class="flex flex-col md:col-span-2">
+                            <label class="text-[10px] font-bold uppercase text-gray-400 tracking-wider mb-2">Subject</label>
+                            <input type="text" placeholder="e.g. Custom 5-Day Wayanad/Munnar honeymoon package" class="glass-input rounded-xl px-4 py-3 text-sm" required>
+                        </div>
+                        <div class="flex flex-col md:col-span-2">
+                            <label class="text-[10px] font-bold uppercase text-gray-400 tracking-wider mb-2">Your Message</label>
+                            <textarea placeholder="Tell us about passenger count, trip dates and preferred cars..." rows="4" class="glass-input rounded-xl px-4 py-3 text-sm" required></textarea>
+                        </div>
+                        <div class="md:col-span-2 flex justify-end">
+                            <button type="submit" class="btn-gold px-8 py-3.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer">
+                                Send Inquiry
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. ADMIN LOGIN VIEW -->
+        <section id="section-admin-login" class="view-section flex items-center justify-center min-h-[60vh]">
+            <div class="w-full max-w-md bg-zinc-950 border border-white/10 rounded-2xl p-6 shadow-2xl text-left">
+                <div class="text-center mb-6">
+                    <img src="assets/logo.png" alt="MU Logo" class="h-16 w-16 rounded-full mx-auto mb-3 border border-amber-500/20 object-cover">
+                    <h3 class="text-xl font-bold uppercase text-amber-400 tracking-wide">Owner Control Gate</h3>
+                    <p class="text-xs text-gray-500 mt-1">Please authenticate to manage dynamic website details</p>
+                </div>
+
+                <form onsubmit="handleAdminLogin(event)">
+                    <div class="flex flex-col mb-4">
+                        <label class="text-[9px] font-bold uppercase text-gray-400 tracking-wider mb-2">Admin Username</label>
+                        <input type="text" id="admin-email" placeholder="admin" class="glass-input rounded-xl px-4 py-3 text-sm" required>
+                    </div>
+                    <div class="flex flex-col mb-6">
+                        <label class="text-[9px] font-bold uppercase text-gray-400 tracking-wider mb-2">Admin Password</label>
+                        <input type="password" id="admin-password" placeholder="admin" class="glass-input rounded-xl px-4 py-3 text-sm" required>
+                    </div>
+                    <button type="submit" class="btn-gold w-full py-3.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer">
+                        Open Portal
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 8. ADMIN DASHBOARD CONTROL CENTER -->
+        <section id="section-admin-dashboard" class="view-section text-left">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 border-b border-white/5 pb-6">
+                <div>
+                    <h2 class="text-3xl font-black uppercase tracking-tight text-white flex items-center">
+                        <i class="fa-solid fa-gauge-high text-amber-500 mr-3 text-2xl"></i>Owner Control Panel
+                    </h2>
+                    <p class="text-gray-400 text-xs md:text-sm mt-1">Create, update, delete vehicle details, manage packages, write travel stories, and moderate customer reviews.</p>
+                </div>
+                <button onclick="adminLogout()" class="bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 text-xs px-5 py-2.5 rounded-xl uppercase tracking-wider cursor-pointer mt-4 md:mt-0 transition-colors">
+                    <i class="fa-solid fa-right-from-bracket mr-1.5"></i>Logout Desk
+                </button>
+            </div>
+
+            <!-- Vehicles Management CRUD Table -->
+            <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl border border-white/5 mb-12">
+                <div class="px-6 py-4 border-b border-white/5 bg-white/2 flex justify-between items-center">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400"><i class="fa-solid fa-car text-amber-500 mr-2"></i>Manage Vehicles Catalogue</h4>
+                    <button onclick="openVehicleAddModal()" class="bg-amber-500 hover:scale-102 hover:shadow-lg text-black px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer">
+                        <i class="fa-solid fa-plus mr-1"></i> Add Vehicle
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-white/3 border-b border-white/10 text-gray-400 uppercase text-[10px] tracking-wider">
+                                <th class="px-6 py-4 font-bold">Vehicle ID</th>
+                                <th class="px-6 py-4 font-bold">Model Name</th>
+                                <th class="px-6 py-4 font-bold">Specs</th>
+                                <th class="px-6 py-4 font-bold">Transit Price</th>
+                                <th class="px-6 py-4 font-bold">Daily Price</th>
+                                <th class="px-6 py-4 font-bold text-right">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-vehicles-tbody" class="divide-y divide-white/5 text-xs">
+                            <!-- Dynamically loaded admin vehicles -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Packages Management CRUD Table -->
+            <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl border border-white/5 mb-12">
+                <div class="px-6 py-4 border-b border-white/5 bg-white/2 flex justify-between items-center">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400"><i class="fa-solid fa-map text-amber-500 mr-2"></i>Manage Holiday Packages</h4>
+                    <button onclick="openPackageAddModal()" class="bg-amber-500 hover:scale-102 hover:shadow-lg text-black px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer">
+                        <i class="fa-solid fa-plus mr-1"></i> Add Package
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-white/3 border-b border-white/10 text-gray-400 uppercase text-[10px] tracking-wider">
+                                <th class="px-6 py-4 font-bold">Package ID</th>
+                                <th class="px-6 py-4 font-bold">Title Name</th>
+                                <th class="px-6 py-4 font-bold">Duration</th>
+                                <th class="px-6 py-4 font-bold text-right">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-packages-tbody" class="divide-y divide-white/5 text-xs">
+                            <!-- Dynamically loaded admin packages -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Yathrakal Stories CRUD Table -->
+            <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl border border-white/5 mb-12">
+                <div class="px-6 py-4 border-b border-white/5 bg-white/2 flex justify-between items-center">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400"><i class="fa-solid fa-feather text-amber-500 mr-2"></i>Yathrakal Stories catalogue</h4>
+                    <button onclick="openStoryAddModal()" class="bg-amber-500 hover:scale-102 hover:shadow-lg text-black px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer">
+                        <i class="fa-solid fa-plus mr-1"></i> Add Story
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-white/3 border-b border-white/10 text-gray-400 uppercase text-[10px] tracking-wider">
+                                <th class="px-6 py-4 font-bold">Story ID</th>
+                                <th class="px-6 py-4 font-bold">Title & Location</th>
+                                <th class="px-6 py-4 font-bold">Content Snippet</th>
+                                <th class="px-6 py-4 font-bold text-right">Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-stories-tbody" class="divide-y divide-white/5 text-xs">
+                            <!-- Stories logs -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Logged-in Customers Table -->
+            <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl border border-white/5 mb-12">
+                <div class="px-6 py-4 border-b border-white/5 bg-white/2 flex justify-between items-center">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400"><i class="fa-solid fa-users text-amber-500 mr-2"></i>Logged-in Customers Directory</h4>
+                    <button onclick="clearCustomersList()" class="bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 text-xs px-3 py-1.5 rounded-xl uppercase tracking-wider cursor-pointer transition-colors">
+                        Clear Directory
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-white/3 border-b border-white/10 text-gray-400 uppercase text-[10px] tracking-wider">
+                                <th class="px-6 py-4 font-bold">Customer ID</th>
+                                <th class="px-6 py-4 font-bold">Name</th>
+                                <th class="px-6 py-4 font-bold">Gmail Address</th>
+                                <th class="px-6 py-4 font-bold">Phone Number</th>
+                                <th class="px-6 py-4 font-bold text-right">Login Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-customers-tbody" class="divide-y divide-white/5 text-xs">
+                            <!-- Customers dynamic logs -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Customer Reviews Moderation Table -->
+            <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl border border-white/5 mb-8">
+                <div class="px-6 py-4 border-b border-white/5 bg-white/2">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400"><i class="fa-solid fa-star text-amber-500 mr-2"></i>Customer Reviews Moderation Queue</h4>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-white/3 border-b border-white/10 text-gray-400 uppercase text-[10px] tracking-wider">
+                                <th class="px-6 py-4 font-bold">Review ID</th>
+                                <th class="px-6 py-4 font-bold">Customer Name</th>
+                                <th class="px-6 py-4 font-bold">Stars</th>
+                                <th class="px-6 py-4 font-bold">Feedback Comments</th>
+                                <th class="px-6 py-4 font-bold">Status</th>
+                                <th class="px-6 py-4 font-bold text-right">Moderation Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-reviews-tbody" class="divide-y divide-white/5 text-xs">
+                            <!-- Reviews Moderation logs -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================
+         MODALS & OVERLAYS
+         ========================================== -->
+
+    <!-- A. MOCK GOOGLE AUTHENTICATION OVERLAY MODAL -->
+    <div id="google-auth-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="w-full max-w-sm bg-zinc-900 border border-white/10 rounded-2xl overflow-hidden shadow-2xl p-6 text-left">
+            <div class="text-center mb-6">
+                <!-- Google G logo -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google G" class="h-10 w-10 mx-auto mb-3">
+                <h3 class="text-base font-bold text-white">Google Account Sign In</h3>
+                <p class="text-xs text-gray-400 mt-1">Sign in to continue to Manu Uncle Travels</p>
+            </div>
+
+            <!-- Login Input Form -->
+            <form id="google-auth-form" onsubmit="handleGoogleAuthSubmit(event)" class="space-y-4">
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 tracking-wider mb-1.5">Full Name *</label>
+                    <input type="text" id="g-auth-name" placeholder="Enter your name" class="w-full glass-input rounded-xl px-4 py-2.5 text-xs" required>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 tracking-wider mb-1.5">Gmail Address *</label>
+                    <input type="email" id="g-auth-email" placeholder="example@gmail.com" class="w-full glass-input rounded-xl px-4 py-2.5 text-xs" required>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 tracking-wider mb-1.5">Phone Number *</label>
+                    <input type="tel" id="g-auth-phone" placeholder="e.g. +91 98765 43210" class="w-full glass-input rounded-xl px-4 py-2.5 text-xs" required>
+                </div>
+                <button type="submit" class="w-full btn-gold py-3 rounded-xl text-xs uppercase font-bold tracking-wider cursor-pointer">
+                    Sign In with Google
+                </button>
+            </form>
+
+            <!-- Close button -->
+            <div class="mt-6 flex justify-end">
+                <button onclick="closeAuthModal()" class="text-xs text-gray-400 hover:text-white cursor-pointer font-medium">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- B. TICKET CONFIRMATION BACKUP MODAL -->
+    <div id="ticket-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="w-full max-w-lg bg-zinc-950 border border-white/10 rounded-3xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div class="bg-gradient-to-r from-green-600 to-emerald-700 p-6 text-center text-white">
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl animate-bounce">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3 class="text-xl font-black uppercase tracking-wider">Booking Logged</h3>
+                <p class="text-xs text-white/80 mt-1">WhatsApp redirecting...</p>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="ticket-container p-6 rounded-2xl relative text-left">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Transit Operator</span>
+                            <h5 class="text-xs font-bold text-white">MANU UNCLE TRAVELS</h5>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Booking Ticket ID</span>
+                            <h5 id="ticket-id" class="text-sm font-black text-amber-400 tracking-wider">MUT-XXXX</h5>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-y-5 gap-x-4 border-t border-b border-white/5 py-5 mb-6 text-xs">
+                        <div>
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Passenger Name</span>
+                            <p id="ticket-user" class="font-bold text-white mt-0.5">-</p>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Journey Details</span>
+                            <p id="ticket-route" class="font-bold text-white mt-0.5">-</p>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Vehicle Class</span>
+                            <p id="ticket-vehicle" class="font-bold text-white mt-0.5">-</p>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Date</span>
+                            <p id="ticket-date" class="font-bold text-white mt-0.5">-</p>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Details</span>
+                            <p id="ticket-passengers" class="font-bold text-white mt-0.5">-</p>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Operator Desk</span>
+                            <p class="font-bold text-green-400 mt-0.5">WhatsApp Active</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Estimated Cost</span>
+                            <h4 id="ticket-fare" class="text-2xl font-black text-amber-400 mt-0.5">₹0/-</h4>
+                        </div>
+                        <span id="ticket-status" class="hidden">PENDING</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white/2 px-6 py-4 border-t border-white/5 flex justify-end">
+                <button onclick="closeTicketModal()" class="btn-gold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer">
+                    Dismiss View
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- D. CUSTOMER REVIEW SUBMISSION MODAL -->
+    <div id="review-submit-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="w-full max-w-lg bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden shadow-2xl text-left">
+            <div class="px-6 py-4 bg-white/2 border-b border-white/10 flex justify-between items-center">
+                <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400"><i class="fa-solid fa-star mr-2"></i>Submit Feedback & Rating</h4>
+                <button onclick="closeReviewModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="review-modal-form" onsubmit="handleReviewSubmit(event)" class="p-6 space-y-4">
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 tracking-wider mb-2">Star Rating (1 to 5 Stars)</label>
+                    <select id="review-input-rating" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
+                        <option value="5" selected>5 Stars - Outstanding Service</option>
+                        <option value="4">4 Stars - Very Good</option>
+                        <option value="3">3 Stars - Good / Standard</option>
+                        <option value="2">2 Stars - Average</option>
+                        <option value="1">1 Star - Needs Improvement</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 tracking-wider mb-2">Your precious feedback comments</label>
+                    <textarea id="review-input-comment" rows="4" placeholder="How was the driver? Cleanliness? Timing? Customer support?" class="glass-input rounded-xl px-4 py-3 text-sm" required></textarea>
+                </div>
+                <div class="flex justify-end pt-4 border-t border-white/5">
+                    <button type="submit" class="btn-gold px-6 py-3 rounded-xl text-xs uppercase tracking-wider">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- E. ADMIN VEHICLE CRUD MODAL (ADD & EDIT) WITH FILE UPLOADER -->
+    <div id="vehicle-crud-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="w-full max-w-xl bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden shadow-2xl text-left">
+            <div class="px-6 py-4 bg-white/2 border-b border-white/10 flex justify-between items-center">
+                <h4 id="veh-editor-title" class="text-sm font-bold uppercase tracking-wider text-amber-400">Manage Vehicle Catalogue</h4>
+                <button onclick="closeVehicleCrudModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="veh-editor-form" onsubmit="handleVehicleSave(event)" class="p-6 grid grid-cols-2 gap-4 max-h-[500px] overflow-y-auto">
+                <div class="flex flex-col col-span-2">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Model Name *</label>
+                    <input type="text" id="veh-in-name" placeholder="e.g. Toyota Fortuner Legender" class="glass-input rounded-xl px-4 py-2.5 text-xs" required>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Category *</label>
+                    <select id="veh-in-category" class="glass-input rounded-xl px-4 py-2.5 text-xs cursor-pointer">
+                        <option value="suv">SUV / Safari</option>
+                        <option value="sedan">Premium Sedan</option>
+                        <option value="traveller">Force Traveller</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Transmission *</label>
+                    <select id="veh-in-type" class="glass-input rounded-xl px-4 py-2.5 text-xs cursor-pointer">
+                        <option value="Automatic">Automatic</option>
+                        <option value="Manual">Manual</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Fuel *</label>
+                    <select id="veh-in-fuel" class="glass-input rounded-xl px-4 py-2.5 text-xs cursor-pointer">
+                        <option value="Diesel">Diesel</option>
+                        <option value="Petrol">Petrol</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Seats Count *</label>
+                    <input type="number" id="veh-in-seats" min="1" max="20" class="glass-input rounded-xl px-4 py-2.5 text-xs" required>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Price Per KM (₹) *</label>
+                    <input type="number" id="veh-in-pricekm" min="1" class="glass-input rounded-xl px-4 py-2.5 text-xs" required>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Price Per Day (₹) *</label>
+                    <input type="number" id="veh-in-priceday" min="1" class="glass-input rounded-xl px-4 py-2.5 text-xs" required>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Driver Allowance (₹/day) *</label>
+                    <input type="number" id="veh-in-allowance" min="1" class="glass-input rounded-xl px-4 py-2.5 text-xs" required>
+                </div>
+                
+                <!-- FileReader Local File Upload Field -->
+                <div class="flex flex-col col-span-2">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Upload Vehicle Photo *</label>
+                    <div class="file-upload-wrapper w-full">
+                        <input type="file" id="veh-in-file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer w-full z-10">
+                        <div class="file-upload-btn rounded-xl py-5 text-center text-xs text-gray-400 border border-dashed border-white/20 hover:border-amber-500/40 transition-colors">
+                            <i class="fa-solid fa-cloud-arrow-up text-lg text-amber-500 mb-1.5"></i>
+                            <p id="veh-file-helper" class="font-bold">Choose a file from your device</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-2 flex justify-end pt-4 border-t border-white/5 space-x-2">
+                    <button type="button" onclick="closeVehicleCrudModal()" class="text-xs font-bold text-gray-400 hover:text-white px-4">Cancel</button>
+                    <button type="submit" class="btn-gold px-6 py-2.5 rounded-xl text-xs uppercase cursor-pointer">Save Catalogue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- F. ADMIN PACKAGE CRUD MODAL (ADD & EDIT) WITH FILE UPLOADER -->
+    <div id="package-crud-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="w-full max-w-xl bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden shadow-2xl text-left">
+            <div class="px-6 py-4 bg-white/2 border-b border-white/10 flex justify-between items-center">
+                <h4 id="pkg-editor-title" class="text-sm font-bold uppercase tracking-wider text-amber-400">Manage Holiday Package</h4>
+                <button onclick="closePackageCrudModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="pkg-editor-form" onsubmit="handlePackageSave(event)" class="p-6 grid grid-cols-2 gap-4 max-h-[500px] overflow-y-auto">
+                <div class="flex flex-col col-span-2">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Package Title *</label>
+                    <input type="text" id="pkg-in-title" placeholder="e.g. Misty Munnar Escape" class="glass-input rounded-xl px-4 py-2.5 text-xs" required>
+                </div>
+                <div class="flex flex-col col-span-2">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Duration *</label>
+                    <input type="text" id="pkg-in-duration" placeholder="e.g. 3 Days / 2 Nights" class="glass-input rounded-xl px-4 py-2.5 text-xs" required>
+                </div>
+                <div class="flex flex-col col-span-2">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Default Vehicle Category</label>
+                    <select id="pkg-in-vehicle" class="glass-input rounded-xl px-4 py-2.5 text-xs cursor-pointer">
+                        <option value="luxury-sedan">Premium Sedan</option>
+                        <option value="suv">Luxury SUV</option>
+                        <option value="traveller">Premium Traveller</option>
+                    </select>
+                </div>
+                <div class="flex flex-col col-span-2">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Short Overview Description *</label>
+                    <textarea id="pkg-in-desc" rows="3" placeholder="Explain the key details, sights and amenities..." class="glass-input rounded-xl px-4 py-2.5 text-xs" required></textarea>
+                </div>
+                
+                <!-- Package Local File Photo Uploader -->
+                <div class="flex flex-col col-span-2">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 mb-1.5">Upload Package Banner Image *</label>
+                    <div class="file-upload-wrapper w-full">
+                        <input type="file" id="pkg-in-file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer w-full z-10">
+                        <div class="file-upload-btn rounded-xl py-5 text-center text-xs text-gray-400 border border-dashed border-white/20 hover:border-amber-500/40 transition-colors">
+                            <i class="fa-solid fa-cloud-arrow-up text-lg text-amber-500 mb-1.5"></i>
+                            <p id="pkg-file-helper" class="font-bold">Choose a file from your device</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-2 flex justify-end pt-4 border-t border-white/5 space-x-2">
+                    <button type="button" onclick="closePackageCrudModal()" class="text-xs font-bold text-gray-400 hover:text-white px-4">Cancel</button>
+                    <button type="submit" class="btn-gold px-6 py-2.5 rounded-xl text-xs uppercase cursor-pointer">Save Package</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- G. ADMIN YATHRAKAL STORY CRUD MODAL (ADD & EDIT) -->
+    <div id="story-crud-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="w-full max-w-lg bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden shadow-2xl text-left">
+            <div class="px-6 py-4 bg-white/2 border-b border-white/10 flex justify-between items-center">
+                <h4 id="story-editor-title" class="text-sm font-bold uppercase tracking-wider text-amber-400">Manage Travel Story (Yathrakal)</h4>
+                <button onclick="closeStoryCrudModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="story-crud-form" onsubmit="handleStorySave(event)" class="p-6 space-y-4">
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 tracking-wider mb-2">Story Title *</label>
+                    <input type="text" id="story-in-title" placeholder="e.g. Cloudbeds Sunrise Munnar" class="glass-input rounded-xl px-4 py-3 text-sm" required>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 tracking-wider mb-2">Destination Location *</label>
+                    <input type="text" id="story-in-place" placeholder="e.g. Munnar, Kerala" class="glass-input rounded-xl px-4 py-3 text-sm" required>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[9px] font-bold uppercase text-gray-400 tracking-wider mb-2">Story Travelogue Content *</label>
+                    <textarea id="story-in-content" rows="5" placeholder="Write the details, roads details and transit features..." class="glass-input rounded-xl px-4 py-3 text-sm" required></textarea>
+                </div>
+                <div class="flex justify-end pt-4 border-t border-white/5 space-x-2">
+                    <button type="button" onclick="closeStoryCrudModal()" class="text-xs font-bold text-gray-400 hover:text-white px-4 cursor-pointer">Cancel</button>
+                    <button type="submit" class="btn-gold px-6 py-2.5 rounded-xl text-xs uppercase cursor-pointer">Save Story Details</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- H. TERMS & CONDITIONS MODAL -->
+    <div id="terms-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="w-full max-w-lg bg-zinc-950 border border-white/10 rounded-2xl overflow-hidden shadow-2xl text-left">
+            <div class="px-6 py-4 bg-white/2 border-b border-white/10 flex justify-between items-center">
+                <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400"><i class="fa-solid fa-file-contract mr-2"></i>Terms & Conditions</h4>
+                <button onclick="closeTermsModal()" class="text-gray-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 space-y-6 text-xs text-gray-300 max-h-[400px] overflow-y-auto leading-relaxed">
+                <div>
+                    <h5 class="text-white font-bold uppercase tracking-wider mb-2 text-xs text-amber-500">1. Vehicle Damage Policy & Responsibility</h5>
+                    <p>In case of any damage, accident, or scratch incurred to the vehicle during the rental or transit period, the customer is fully responsible to either repair the vehicle at an authorized service center or pay the full cost of the repair estimated by the company.</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold uppercase tracking-wider mb-2 text-xs text-amber-500">2. Document Submission</h5>
+                    <p>Before vehicle hand-over, the customer must submit valid and original copies of the following documents:</p>
+                    <ul class="list-disc pl-4 mt-1.5 space-y-1">
+                        <li>Valid Driving License (DL) suitable for the rented class of vehicle.</li>
+                        <li>Valid Aadhaar Card for identity verification.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-bold uppercase tracking-wider mb-2 text-xs text-amber-500">3. Usage Terms</h5>
+                    <p>The vehicle must not be used for any illegal purposes, street racing, towing, overloading, or off-roading (except for custom-approved SUV routes). Any breach of terms will result in immediate termination of rental without refund and absolute liability for consequences.</p>
+                </div>
+            </div>
+            <div class="bg-white/2 px-6 py-4 border-t border-white/5 flex justify-end">
+                <button onclick="closeTermsModal()" class="btn-gold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer">
+                    I Understand
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         FOOTER
+         ========================================== -->
+    <footer class="mt-32 border-t border-white/10 pt-16 pb-12 max-w-7xl mx-auto px-4 md:px-8 text-xs text-gray-500 text-left">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div>
+                <!-- Brand logo in footer -->
+                <div class="flex items-center space-x-4 mb-4">
+                    <img src="assets/logo.png" alt="Manu Uncle Travels Logo" class="h-10 w-10 rounded-full border border-amber-500/30 object-cover shadow-[0_0_10px_rgba(245,158,11,0.2)]">
+                    <h5 class="text-white font-bold uppercase tracking-wider text-sm tracking-widest bg-gradient-to-r from-white via-amber-200 to-amber-400 bg-clip-text text-transparent">Manu Uncle Travels</h5>
+                </div>
+                <p class="leading-relaxed mb-4 text-gray-400">Kerala's benchmark premium transit operator. Delivering VIP comfort, safety, and tour guides since 2012.</p>
+                <div class="flex space-x-4 text-gray-400">
+                    <a href="#" class="hover:text-amber-400 transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-amber-400 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://wa.me/918547132282" target="_blank" class="hover:text-amber-400 transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div>
+                <h5 class="text-white font-bold uppercase tracking-wider mb-4">Popular Packages</h5>
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="navigateTo('packages'); return false;" class="hover:text-amber-400 transition-colors">Munnar Tea Fields</a></li>
+                    <li><a href="#" onclick="navigateTo('packages'); return false;" class="hover:text-amber-400 transition-colors">Wayanad Wild Hills</a></li>
+                    <li><a href="#" onclick="navigateTo('packages'); return false;" class="hover:text-amber-400 transition-colors">Vagamon Meadows</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white font-bold uppercase tracking-wider mb-4">Rent Options</h5>
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="navigateTo('rent-cars'); return false;" class="hover:text-amber-400 transition-colors">Premium Luxury Sedans</a></li>
+                    <li><a href="#" onclick="navigateTo('rent-cars'); return false;" class="hover:text-amber-400 transition-colors">Mountain Safari SUVs</a></li>
+                    <li><a href="#" onclick="navigateTo('rent-cars'); return false;" class="hover:text-amber-400 transition-colors">Executive Passenger Travellers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-white font-bold uppercase tracking-wider mb-4">Location</h5>
+                <p class="leading-relaxed mb-4 text-gray-400">Manu Uncle Travels<br>Chengannur, Angadical - 689123</p>
+                <p class="font-bold text-gray-300">Desk WhatsApp: +91 85471 32282</p>
+            </div>
+        </div>
+        <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
+            <p>&copy; 2026 Manu Uncle Travels. All rights reserved. Designed with custom 3D glassmorphic styling.</p>
+            
+            <!-- Attribution remains -->
+            <div class="flex flex-col items-end mt-4 md:mt-0 space-y-1">
+                <span class="made-by-rahul font-mono"><i class="fa-solid fa-code mr-1"></i>website made by rahul</span>
+                <p class="flex items-center"><i class="fa-solid fa-feather-pointed text-amber-500/40 mr-2"></i> Kerala State Approved Operator</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core App Router & Logic -->
+    <script src="app.js"></script>
+
+    <!-- Parallax 3D Card Script -->
+    <script>
+        const card = document.getElementById('booking-card');
+        if (card) {
+            document.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 60;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 60;
+                card.style.transform = `rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
+            });
+
+            document.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
+        }
+    </script>
+</body>
+</html>
