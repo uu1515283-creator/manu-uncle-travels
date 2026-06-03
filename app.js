@@ -399,7 +399,7 @@ function renderVehicles() {
                             <span class="bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2.5 py-1 rounded border border-emerald-500/20 uppercase tracking-wider">Available</span>
                         </div>
                         <button onclick="selectVehicleForTransit('${v.id}')" class="bg-gradient-to-r from-amber-500 to-yellow-600 text-black px-4.5 py-2.5 rounded-xl text-xs font-bold hover:shadow-lg transition-all cursor-pointer">
-                            Reserve Transit
+                            Book a ride
                         </button>
                     </div>
                 </div>
@@ -580,14 +580,14 @@ function calculateTransitFare() {
         return null;
     }
 
-    const lookupKey = `${fromVal.toLowerCase()}-${toVal.toLowerCase()}`;
-    const reverseLookupKey = `${toVal.toLowerCase()}-${fromVal.toLowerCase()}`;
-    let distance = DISTANCE_MATRIX[lookupKey] || DISTANCE_MATRIX[reverseLookupKey] || 100;
+    const lookupKey = `${fromVal.trim().toLowerCase()}-${toVal.trim().toLowerCase()}`;
+    const reverseLookupKey = `${toVal.trim().toLowerCase()}-${fromVal.trim().toLowerCase()}`;
+    let distance = DISTANCE_MATRIX[lookupKey] || DISTANCE_MATRIX[reverseLookupKey] || null;
 
     const vehicle = vehicles.find(v => v.id === vehicleId);
     if (!vehicle) return null;
 
-    let baseTransit = distance * vehicle.pricePerKm;
+    let baseTransit = distance ? (distance * vehicle.pricePerKm) : 0;
     let allowance = vehicle.allowance;
     let total = baseTransit + allowance;
 
@@ -647,8 +647,7 @@ function handleTransitBooking() {
 - Route: ${fromVal} ➔ ${toVal}
 - Date: ${dateVal} ${returnDateVal ? `(Return: ${returnDateVal})` : ""}
 - Vehicle Class: ${pricing.vehicleName}
-- Passengers: ${passengersVal}
-- Estimated Distance: ${pricing.distance} km
+- Passengers: ${passengersVal}${pricing.distance ? `\n- Estimated Distance: ${pricing.distance} km` : ""}
 
 Please confirm availability and provide a quote. Thank you!`;
 

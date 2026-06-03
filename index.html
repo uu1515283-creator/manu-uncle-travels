@@ -125,7 +125,7 @@
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-white/10 pb-4">
                     <h3 class="text-lg md:text-xl font-bold flex items-center text-amber-400 tracking-wide uppercase">
                         <span class="inline-block w-2.5 h-5 bg-amber-500 rounded mr-2.5 shadow-[0_0_10px_rgba(245,158,11,0.5)]"></span>
-                        Reserve Transit Ride
+                        Book a ride
                     </h3>
                     <p class="text-[11px] text-gray-400 mt-1 md:mt-0 font-medium"><i class="fa-solid fa-circle-info text-amber-500 mr-1"></i>All submissions directly open WhatsApp for instant booking</p>
                 </div>
@@ -134,28 +134,13 @@
                     <!-- From Location -->
                     <div class="flex flex-col">
                         <label for="book-from" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2"><i class="fa-solid fa-circle-dot text-[9px] text-amber-500 mr-1"></i>From Location *</label>
-                        <select id="book-from" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
-                            <option value="Cochin" selected>Cochin Hub (Airport/Station)</option>
-                            <option value="Munnar">Munnar Valley</option>
-                            <option value="Wayanad">Wayanad Hills</option>
-                            <option value="Vagamon">Vagamon Meadows</option>
-                            <option value="Alleppey">Alleppey Backwaters</option>
-                            <option value="Trivandrum">Trivandrum City</option>
-                        </select>
+                        <input type="text" id="book-from" placeholder="e.g. Cochin Airport, Hotel, etc." class="glass-input rounded-xl px-4 py-3 text-sm" required>
                     </div>
 
                     <!-- To Location -->
                     <div class="flex flex-col">
                         <label for="book-to" class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2"><i class="fa-solid fa-location-dot text-[9px] text-amber-500 mr-1"></i>To Destination *</label>
-                        <select id="book-to" class="glass-input rounded-xl px-4 py-3 text-sm cursor-pointer">
-                            <option value="" disabled selected>Choose Destination</option>
-                            <option value="Munnar">Munnar Valley</option>
-                            <option value="Wayanad">Wayanad Hills</option>
-                            <option value="Vagamon">Vagamon Meadows</option>
-                            <option value="Alleppey">Alleppey Backwaters</option>
-                            <option value="Trivandrum">Trivandrum City</option>
-                            <option value="Cochin">Cochin Airport</option>
-                        </select>
+                        <input type="text" id="book-to" placeholder="e.g. Munnar, Wayanad, Trivandrum, etc." class="glass-input rounded-xl px-4 py-3 text-sm" required>
                     </div>
 
                     <!-- Journey Date -->
